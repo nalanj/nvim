@@ -2,6 +2,8 @@ vim.cmd("set expandtab")
 vim.cmd("set tabstop=2")
 vim.cmd("set softtabstop=2")
 vim.cmd("set shiftwidth=2")
+vim.cmd("set relativenumber")
+vim.cmd("set termguicolors")
 
 vim.g.mapleader = ","
 
@@ -19,7 +21,12 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
-  { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+  {
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {},
+  },
   {
     'nvim-telescope/telescope.nvim', tag = '0.1.6',
     dependencies = { 'nvim-lua/plenary.nvim' }
@@ -28,14 +35,24 @@ local plugins = {
   {
     'numToStr/Comment.nvim',
     lazy = false,
+  },
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v3.x",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons", 
+      "MunifTanjim/nui.nvim",
+      "3rd/image.nvim", 
+    }
   }
 }
 local opts = {}
 
 require("lazy").setup(plugins, opts)
 
-require("catppuccin").setup()
-vim.cmd.colorscheme = "catppuccin-macchiato"
+require("tokyonight").setup()
+vim.cmd("colorscheme tokyonight-moon")
 
 local telescope = require("telescope.builtin")
 vim.keymap.set('n', '<C-p>', telescope.find_files, {})
